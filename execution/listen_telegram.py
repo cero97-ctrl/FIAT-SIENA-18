@@ -520,6 +520,19 @@ INCLUYE UN DISCLAIMER AL INICIO: "Nota: Soy una IA. Este reporte es informativo 
                                 else:
                                     reply_text = f"❌ Error durante la ingesta: {res.get('message', 'Error desconocido')}"
 
+                    elif msg.startswith("/biblioteca") or msg.startswith("/library"):
+                        run_tool("telegram_tool.py", ["--action", "send", "--message", "📚 Consultando índice de documentos...", "--chat-id", sender_id])
+                        res = run_tool("list_documents.py", [])
+                        
+                        if res and res.get("status") == "success":
+                            docs = res.get("documents", [])
+                            if docs:
+                                reply_text = "📚 *Documentos en Memoria:*\n\n" + "\n".join([f"📄 `{d['name']}`" for d in docs])
+                            else:
+                                reply_text = "📭 No hay documentos PDF ingestados aún."
+                        else:
+                            reply_text = f"❌ Error consultando biblioteca: {res.get('message')}"
+
                     elif msg.startswith("/repuesto") or msg.startswith("/precio") or msg.startswith("/part"):
                         part_name = msg.split(" ", 1)[1].strip() if " " in msg else ""
                         if not part_name:
