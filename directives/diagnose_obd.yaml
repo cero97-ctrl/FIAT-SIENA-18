@@ -1,0 +1,16 @@
+goal: "Realizar un diagnóstico OBD-II (simulado) para leer códigos de error (DTC) y datos del motor."
+required_inputs:
+  - name: "query_type"
+    description: "El tipo de dato a consultar ('dtc', 'rpm', 'temp')."
+steps:
+  - step: "Consultar Simulador OBD-II"
+    script_to_invoke: "execution/simulate_obd.py"
+    description: "Ejecuta el simulador para obtener datos del vehículo."
+    inputs:
+      - name: "--query"
+        value: "{{query_type}}"
+expected_outputs:
+  - "Un objeto JSON con los datos simulados (códigos, RPM o temperatura)."
+edge_cases:
+  - case: "Consulta inválida"
+    protocol: "El script fallará. Informar al usuario sobre las opciones válidas."

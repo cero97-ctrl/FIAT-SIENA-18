@@ -1,0 +1,13 @@
+goal: "Comparar la latencia (velocidad de respuesta) entre los diferentes proveedores de IA configurados."
+required_inputs:
+  - name: "none"
+    description: "Usa un prompt estándar de prueba."
+steps:
+  - step: "Run Benchmark"
+    script_to_invoke: "execution/benchmark_models.py"
+    description: "Enviar una solicitud idéntica a OpenAI, Anthropic y Gemini (si están disponibles) y medir el tiempo de respuesta."
+expected_outputs:
+  - "Una tabla comparativa con los tiempos en segundos para cada modelo."
+edge_cases:
+  - case: "Sin API Keys"
+    protocol: "El script omitirá los proveedores que no tengan clave configurada en .env."

@@ -1,0 +1,16 @@
+goal: "Obtener una explicación detallada paso a paso de un archivo de código fuente."
+required_inputs:
+  - name: "file_path"
+    description: "Ruta del archivo a explicar (ej. execution/script_complejo.py)."
+steps:
+  - step: "Explain Code"
+    script_to_invoke: "execution/explain_code.py"
+    description: "Enviar el código al LLM (priorizando Gemini) para generar una explicación didáctica."
+    inputs:
+      - name: "--file"
+        value: "{{file_path}}"
+expected_outputs:
+  - "Una explicación en formato Markdown impresa en consola."
+edge_cases:
+  - case: "Archivo no encontrado"
+    protocol: "El script reportará error y terminará."

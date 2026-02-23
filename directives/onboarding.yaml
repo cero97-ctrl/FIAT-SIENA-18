@@ -1,0 +1,23 @@
+goal: "Explicar la arquitectura técnica, la filosofía de diseño y el flujo de trabajo del agente a nuevos desarrolladores."
+required_inputs:
+  - name: "none"
+    description: "No requiere entradas específicas, es un flujo informativo."
+steps:
+  - step: "Explicar el Modelo Mental"
+    action: "Leer .gemini/instructions.md y resumir el rol del agente como middleware entre intención e implementación."
+  - step: "Desglosar la Arquitectura de 3 Capas"
+    action: "Detallar las responsabilidades: Layer 1 (Directivas/SOPs), Layer 2 (Orquestación/Toma de decisiones), Layer 3 (Ejecución/Scripts deterministas)."
+  - step: "Revisar Organización de Archivos"
+    action: "Listar y explicar los directorios clave: directives/, execution/, .tmp/, .env y .gemini/."
+  - step: "Explicar Principios Operativos"
+    action: "Resaltar: 'Reuse before building', 'Self-annealing' (aprender de errores) y 'Validate before moving on'."
+  - step: "Guía de Setup"
+    action: "Proveer instrucciones para configurar el entorno virtual (Conda) y dependencias."
+expected_outputs:
+  - "El desarrollador entiende cómo crear nuevas directivas y scripts."
+  - "El desarrollador conoce la ubicación de los archivos de configuración y memoria."
+edge_cases:
+  - case: "Archivo .gemini/instructions.md no encontrado"
+    protocol: "Utilizar .gemini/AGENT_FRAMEWORK.md como fuente de verdad alternativa."
+  - case: "Dudas sobre seguridad"
+    protocol: "Enfatizar que las credenciales van en .env y nunca se suben al repositorio."

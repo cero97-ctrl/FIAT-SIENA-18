@@ -1,0 +1,18 @@
+goal: "Generar automáticamente pruebas unitarias para un archivo de código Python utilizando el LLM."
+required_inputs:
+  - name: "file_path"
+    description: "Ruta del archivo fuente para el cual se crearán los tests (ej. execution/script.py)."
+steps:
+  - step: "Generate Unit Tests"
+    script_to_invoke: "execution/generate_tests.py"
+    description: "Analizar el código fuente y generar un archivo test_<nombre>.py con casos de prueba usando unittest."
+    inputs:
+      - name: "--file"
+        value: "{{file_path}}"
+expected_outputs:
+  - "Un nuevo archivo de pruebas creado en el mismo directorio que el archivo fuente."
+edge_cases:
+  - case: "Código fuente inválido"
+    protocol: "El LLM podría tener dificultades, pero el script intentará generar tests basados en el texto."
+  - case: "Tests generados con sintaxis errónea"
+    protocol: "El script valida la sintaxis antes de guardar y fallará si es inválida."

@@ -1,0 +1,18 @@
+goal: "Procesar un documento (PDF) y almacenar su contenido en la memoria vectorial para consultas futuras (RAG)."
+required_inputs:
+  - name: "file_path"
+    description: "Ruta al archivo PDF que se va a ingestar en la base de datos vectorial."
+steps:
+  - step: "Ingestar Documento"
+    script_to_invoke: "execution/ingest_manual.py"
+    description: "Extrae el texto del PDF, lo divide en fragmentos y los guarda en ChromaDB."
+    inputs:
+      - name: "--file"
+        value: "{{file_path}}"
+expected_outputs:
+  - "Un objeto JSON confirmando el éxito y el número de fragmentos procesados."
+edge_cases:
+  - case: "Archivo no encontrado"
+    protocol: "Verificar que la ruta al archivo sea correcta y que el archivo exista."
+  - case: "PDF sin texto"
+    protocol: "Informar al usuario que el PDF podría ser una imagen escaneada y no se puede procesar."

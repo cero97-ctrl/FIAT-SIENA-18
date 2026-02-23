@@ -1,0 +1,16 @@
+goal: "Analizar el código y la estructura del proyecto para generar un archivo README.md preliminar."
+required_inputs:
+  - name: "project_name"
+    description: "Nombre del proyecto para el título del README."
+steps:
+  - step: "Generate README"
+    script_to_invoke: "execution/generate_readme.py"
+    description: "Escanear directivas y estructura, y usar el LLM para redactar la documentación."
+    inputs:
+      - name: "--name"
+        value: "{{project_name}}"
+expected_outputs:
+  - "Un archivo README.md generado en la raíz del proyecto."
+edge_cases:
+  - case: "README.md ya existe"
+    protocol: "El script renombrará el existente a README.md.bak antes de crear el nuevo para evitar pérdida de datos."

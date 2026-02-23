@@ -1,0 +1,24 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+# YAML files (Directives) use 2 spaces
+[*.{yaml,yml}]
+indent_size = 2
+
+# Markdown files allow trailing whitespace for line breaks
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

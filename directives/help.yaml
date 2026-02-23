@@ -1,0 +1,13 @@
+goal: "Mostrar un resumen de las capacidades del agente y las directivas disponibles."
+required_inputs:
+  - name: "none"
+    description: "No requiere entradas."
+steps:
+  - step: "Listar Directivas"
+    script_to_invoke: "execution/list_directives.py"
+    description: "Escanear la carpeta directives/ y mostrar el nombre y objetivo de cada archivo disponible."
+expected_outputs:
+  - "Una tabla en consola con el listado de herramientas disponibles."
+edge_cases:
+  - case: "No hay directivas"
+    protocol: "El script indicará que no se encontraron archivos."

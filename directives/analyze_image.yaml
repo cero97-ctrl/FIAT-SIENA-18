@@ -1,0 +1,17 @@
+goal: "Analizar una imagen proporcionada por el usuario para identificar componentes mecánicos o daños visibles."
+required_inputs:
+  - name: "image_path"
+    description: "Ruta local al archivo de imagen (.jpg, .png)."
+  - name: "user_query"
+    description: "Pregunta específica del usuario sobre la imagen (ej. '¿Qué pieza es esta?')."
+steps:
+  - step: "Análisis de Visión"
+    script_to_invoke: "execution/analyze_image.py"
+    description: "Envía la imagen y el prompt a un modelo multimodal (Gemini Vision)."
+    inputs:
+      - name: "--image"
+        value: "{{image_path}}"
+      - name: "--prompt"
+        value: "{{user_query}}"
+expected_outputs:
+  - "Un objeto JSON con la descripción técnica de la imagen."

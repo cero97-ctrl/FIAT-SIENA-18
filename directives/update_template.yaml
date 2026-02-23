@@ -1,0 +1,22 @@
+goal: "Sincronizar el proyecto actual con las últimas actualizaciones del repositorio plantilla base."
+required_inputs:
+  - name: "template_url"
+    description: "URL del repositorio Git de la plantilla original (ej. https://github.com/usuario/plantilla-proy.git)."
+optional_inputs:
+  - name: "branch"
+    description: "Rama de la plantilla a fusionar."
+    default: "main"
+steps:
+  - step: "Update from Template"
+    script_to_invoke: "execution/update_from_template.py"
+    description: "Configura el remote 'template', descarga los cambios (fetch) e intenta fusionarlos (merge)."
+    inputs:
+      - name: "--template-url"
+        value: "{{template_url}}"
+      - name: "--branch"
+        value: "{{branch}}"
+expected_outputs:
+  - "El código local se actualiza con los commits más recientes de la plantilla."
+edge_cases:
+  - case: "Conflictos de fusión (Merge Conflicts)"
+    protocol: "El script fallará y notificará los archivos en conflicto. El usuario debe resolverlos manualmente en VS Code y finalizar el merge."

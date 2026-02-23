@@ -1,0 +1,22 @@
+goal: "Traducir archivos de documentación (Markdown/Text) a un idioma específico utilizando Gemini."
+required_inputs:
+  - name: "file_path"
+    description: "Ruta del archivo a traducir (ej. README.md)."
+  - name: "target_language"
+    description: "Idioma destino (ej. 'Inglés', 'Francés', 'Portugués')."
+steps:
+  - step: "Translate Document"
+    script_to_invoke: "execution/translate_text.py"
+    description: "Enviar el contenido del archivo al LLM para su traducción manteniendo el formato."
+    inputs:
+      - name: "--file"
+        value: "{{file_path}}"
+      - name: "--lang"
+        value: "{{target_language}}"
+expected_outputs:
+  - "Un nuevo archivo traducido guardado como <nombre>_<lang>.<ext>."
+edge_cases:
+  - case: "Archivo no encontrado"
+    protocol: "El script reportará error y terminará."
+  - case: "Texto demasiado largo"
+    protocol: "El LLM podría truncar si excede la ventana de contexto (aunque Gemini tiene una ventana grande)."

@@ -1,0 +1,13 @@
+goal: "Congelar las versiones exactas de las librerías instaladas en requirements.txt (Pinning)."
+required_inputs:
+  - name: "none"
+    description: "Captura el estado actual del entorno."
+steps:
+  - step: "Freeze Dependencies"
+    script_to_invoke: "execution/freeze_requirements.py"
+    description: "Ejecutar pip freeze y sobrescribir requirements.txt con las versiones actuales."
+expected_outputs:
+  - "El archivo requirements.txt se actualiza con versiones específicas (ej. package==1.2.3)."
+edge_cases:
+  - case: "Entorno virtual no activado"
+    protocol: "El script capturará las librerías del python que lo ejecuta. Se recomienda verificar que sea el entorno correcto."

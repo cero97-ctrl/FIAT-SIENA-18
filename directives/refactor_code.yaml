@@ -1,0 +1,20 @@
+goal: "Refactorizar un archivo de código fuente para corregir problemas detectados automáticamente."
+required_inputs:
+  - name: "file_path"
+    description: "Ruta del archivo a corregir (ej. execution/script.py)."
+  - name: "issues"
+    description: "Lista de problemas, errores o descripción de lo que se debe arreglar."
+steps:
+  - step: "Refactor Code with LLM"
+    script_to_invoke: "execution/refactor_code.py"
+    description: "Enviar el código original y los errores al LLM para generar una versión corregida y validada."
+    inputs:
+      - name: "--file"
+        value: "{{file_path}}"
+      - name: "--issues"
+        value: "{{issues}}"
+expected_outputs:
+  - "El archivo original es sobrescrito con la versión corregida."
+edge_cases:
+  - case: "El LLM devuelve código inválido"
+    protocol: "El script valida la sintaxis (AST) antes de sobrescribir. Si falla, aborta la operación para proteger el archivo."

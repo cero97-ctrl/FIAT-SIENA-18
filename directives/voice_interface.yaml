@@ -1,0 +1,15 @@
+goal: "Interactuar con el agente mediante comandos de voz (Speech-to-Text)."
+required_inputs:
+  - name: "none"
+    description: "El script activa el micrófono y espera input del usuario."
+steps:
+  - step: "Listen and Chat"
+    script_to_invoke: "execution/voice_interface.py"
+    description: "Capturar audio, transcribirlo a texto y enviarlo al LLM para obtener respuesta."
+expected_outputs:
+  - "Transcripción del audio y respuesta del agente en consola."
+edge_cases:
+  - case: "Micrófono no detectado"
+    protocol: "El script fallará si PyAudio no encuentra un dispositivo de entrada."
+  - case: "Dependencias faltantes"
+    protocol: "Requiere SpeechRecognition y PyAudio instalados."

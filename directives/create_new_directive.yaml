@@ -1,0 +1,20 @@
+goal: "Generar automáticamente el esqueleto de una nueva directiva operativa en formato YAML."
+required_inputs:
+  - name: "filename"
+    description: "Nombre del archivo para la nueva directiva (ej. 'analizar_datos.yaml')."
+  - name: "target_goal"
+    description: "El objetivo principal que cumplirá esta nueva directiva."
+steps:
+  - step: "Scaffold Directive"
+    script_to_invoke: "execution/scaffold_directive.py"
+    description: "Crear el archivo físico en la carpeta directives/ con la estructura estándar pre-rellenada."
+    inputs:
+      - name: "--filename"
+        value: "{{filename}}"
+      - name: "--goal"
+        value: "{{target_goal}}"
+expected_outputs:
+  - "Un nuevo archivo YAML creado en directives/ listo para ser editado."
+edge_cases:
+  - case: "El archivo ya existe"
+    protocol: "El script fallará para evitar sobrescritura accidental. El usuario debe elegir otro nombre o borrar el archivo existente."

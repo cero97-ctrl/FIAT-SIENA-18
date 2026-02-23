@@ -1,0 +1,28 @@
+goal: "Automatizar el control de versiones: añadir cambios, hacer commit y subir a GitHub."
+required_inputs:
+  - name: "commit_message"
+    description: "Mensaje descriptivo para el commit."
+optional_inputs:
+  - name: "remote_url"
+    description: "URL del repositorio remoto (si no está configurado aún)."
+  - name: "branch"
+    description: "Rama a la que subir los cambios (default: main)."
+    default: "main"
+steps:
+  - step: "Git Push Workflow"
+    script_to_invoke: "execution/deploy_to_github.py"
+    description: "Ejecuta la secuencia: git add -> git commit -> git push."
+    inputs:
+      - name: "--message"
+        value: "{{commit_message}}"
+      - name: "--remote"
+        value: "{{remote_url}}"
+      - name: "--branch"
+        value: "{{branch}}"
+expected_outputs:
+  - "Cambios subidos exitosamente al repositorio remoto."
+edge_cases:
+  - case: "Sin repositorio remoto"
+    protocol: "El script fallará si no hay remote configurado y no se provee uno como input."
+  - case: "Fallo de autenticación"
+    protocol: "El usuario debe asegurar que tiene SSH keys o Credential Helper configurado en su entorno."

@@ -1,0 +1,16 @@
+goal: "Analizar una nota de voz que contiene el sonido de un motor para diagnosticar posibles fallas mecánicas."
+required_inputs:
+  - name: "audio_file_path"
+    description: "Ruta al archivo de audio (.ogg, .mp3, etc.) con el ruido del motor."
+steps:
+  - step: "Analizar Sonido y Diagnosticar"
+    script_to_invoke: "execution/chat_with_llm.py"
+    description: "Utiliza un prompt especializado para que un LLM analice la descripción de un sonido y sugiera causas probables."
+    inputs:
+      - name: "--prompt"
+        value: "Actúa como un mecánico experto con un oído muy entrenado. He recibido una nota de voz con un ruido de motor. Basándote en tu conocimiento de ruidos de motor (golpeteos, chillidos, siseos), ¿cuáles son las 3 fallas más probables en un Fiat Siena 1.8 para un sonido descrito como '{{descripcion_sonido}}'? Si la descripción es una pregunta hablada, responde a la pregunta en su lugar."
+expected_outputs:
+  - "Un texto con el análisis del sonido y un diagnóstico preliminar de las posibles causas."
+edge_cases:
+  - case: "Audio con mucho ruido de fondo"
+    protocol: "El agente debe indicar que el ruido ambiental dificulta el diagnóstico y pedir una grabación más clara."

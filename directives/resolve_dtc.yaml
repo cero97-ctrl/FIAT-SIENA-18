@@ -1,0 +1,18 @@
+goal: "Obtener el procedimiento de reparación oficial para un código de error (DTC) consultando el manual de taller ingestados."
+required_inputs:
+  - name: "dtc_code"
+    description: "Código de falla OBD-II (ej. P0300, P0130)."
+steps:
+  - step: "Consultar Manual y Generar Solución"
+    script_to_invoke: "execution/chat_with_llm.py"
+    description: "Consulta la base de datos vectorial para encontrar menciones del DTC y genera una guía paso a paso."
+    inputs:
+      - name: "--prompt"
+        value: "El auto presenta el código de error {{dtc_code}}. Busca en el manual de taller ingestados el procedimiento de diagnóstico y reparación específico para este código en el Fiat Siena 1.8. Enumera los pasos a seguir."
+      - name: "--memory-query"
+        value: "{{dtc_code}} diagnóstico reparación"
+expected_outputs:
+  - "Texto con la explicación técnica y pasos de solución basados en el manual."
+edge_cases:
+  - case: "Código no encontrado en manual"
+    protocol: "El LLM deberá inferir la solución basándose en conocimiento general del motor GM 1.8."

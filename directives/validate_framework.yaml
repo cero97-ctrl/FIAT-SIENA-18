@@ -1,0 +1,19 @@
+goal: "Validar la integridad estructural del framework y la sintaxis de las directivas operativas."
+required_inputs:
+  - name: "none"
+    description: "Este flujo no requiere parámetros de entrada."
+steps:
+  - step: "Check System Health"
+    script_to_invoke: "execution/check_system_health.py"
+    description: "Verificar la existencia de carpetas y archivos críticos."
+  - step: "Validate Directives"
+    script_to_invoke: "execution/validate_directives.py"
+    description: "Analizar sintaxis y esquema de todos los archivos YAML en directives/."
+expected_outputs:
+  - "Reporte de estado del sistema (OK/Error)."
+  - "Validación de directivas (OK/Lista de errores)."
+edge_cases:
+  - case: "Error en System Health"
+    protocol: "Restaurar archivos faltantes desde el repositorio original o backup."
+  - case: "Error en Directivas"
+    protocol: "Editar los archivos YAML reportados para corregir la sintaxis o campos faltantes."

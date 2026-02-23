@@ -1,0 +1,22 @@
+goal: "Actualizar los componentes centrales del framework (scripts y configuración) sin alterar las directivas del usuario."
+required_inputs:
+  - name: "template_url"
+    description: "URL del repositorio plantilla (ej. https://github.com/usuario/plantilla-proy.git)."
+optional_inputs:
+  - name: "branch"
+    description: "Rama de la plantilla (default: main)."
+    default: "main"
+steps:
+  - step: "Update Core"
+    script_to_invoke: "execution/update_framework.py"
+    description: "Hacer fetch de la plantilla y checkout forzado solo de las carpetas execution/ y .gemini/."
+    inputs:
+      - name: "--template-url"
+        value: "{{template_url}}"
+      - name: "--branch"
+        value: "{{branch}}"
+expected_outputs:
+  - "Scripts de ejecución actualizados a la última versión de la plantilla."
+edge_cases:
+  - case: "Cambios locales en execution/"
+    protocol: "Advertir que los cambios manuales en scripts del núcleo serán sobrescritos."

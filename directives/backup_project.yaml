@@ -1,0 +1,13 @@
+goal: "Crear una copia de seguridad comprimida (.zip) del código fuente del proyecto."
+required_inputs:
+  - name: "none"
+    description: "No requiere entradas. Se genera con timestamp."
+steps:
+  - step: "Create Zip Archive"
+    script_to_invoke: "execution/backup_project.py"
+    description: "Comprimir el directorio del proyecto excluyendo .git, venv y archivos temporales."
+expected_outputs:
+  - "Un archivo .zip guardado en la carpeta backups/."
+edge_cases:
+  - case: "Permisos de escritura"
+    protocol: "El script fallará si no puede crear la carpeta backups/."

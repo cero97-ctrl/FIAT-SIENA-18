@@ -1,0 +1,18 @@
+goal: "Consultar a un Modelo de Lenguaje (LLM) externo para obtener razonamiento, código o respuestas generales."
+required_inputs:
+  - name: "prompt"
+    description: "La consulta o instrucción que se enviará al modelo."
+optional_inputs:
+  - name: "provider"
+    description: "El proveedor del servicio (openai, anthropic o gemini). Si se omite, se detectará automáticamente según las claves disponibles."
+steps:
+  - step: "Call LLM API"
+    script_to_invoke: "execution/chat_with_llm.py"
+    description: "Enviar el prompt a la API seleccionada y recuperar la respuesta."
+    inputs:
+      - name: "--prompt"
+        value: "{{prompt}}"
+      - name: "--provider"
+        value: "{{provider}}"
+expected_outputs:
+  - "Un objeto JSON con el campo 'content' conteniendo la respuesta del modelo."

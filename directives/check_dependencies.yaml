@@ -1,0 +1,13 @@
+goal: "Verificar que todas las librerías listadas en requirements.txt estén instaladas en el entorno actual."
+required_inputs:
+  - name: "none"
+    description: "No requiere entradas."
+steps:
+  - step: "Check Dependencies"
+    script_to_invoke: "execution/check_dependencies.py"
+    description: "Comparar paquetes instalados contra requirements.txt."
+expected_outputs:
+  - "Confirmación de éxito o lista de paquetes faltantes."
+edge_cases:
+  - case: "requirements.txt no existe"
+    protocol: "El script fallará indicando que no encuentra el archivo."

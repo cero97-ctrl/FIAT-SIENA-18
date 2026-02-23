@@ -1,0 +1,13 @@
+goal: "Ejecutar una batería completa de validaciones y formateo antes de subir cambios al repositorio."
+required_inputs:
+  - name: "none"
+    description: "No requiere entradas."
+steps:
+  - step: "Run Quality Gate"
+    script_to_invoke: "execution/pre_commit_check.py"
+    description: "Orquestar la ejecución secuencial de format_code, audit_codebase y check_system_health."
+expected_outputs:
+  - "Código formateado y reporte de éxito si todas las pruebas pasan."
+edge_cases:
+  - case: "Fallo en auditoría o salud"
+    protocol: "El script se detendrá y mostrará el error. El usuario debe corregirlo antes de intentar hacer commit."

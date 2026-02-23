@@ -1,0 +1,15 @@
+goal: "Ejecutar la suite de pruebas unitarias del proyecto para asegurar la estabilidad del código."
+required_inputs:
+  - name: "none"
+    description: "Busca y ejecuta automáticamente todos los tests (test_*.py)."
+steps:
+  - step: "Run Unit Tests"
+    script_to_invoke: "execution/run_tests.py"
+    description: "Ejecutar descubrimiento de tests con unittest (o pytest si está instalado)."
+expected_outputs:
+  - "Reporte de resultados en consola (Pass/Fail)."
+edge_cases:
+  - case: "No se encuentran tests"
+    protocol: "El script informará que no se hallaron archivos de prueba."
+  - case: "Fallan los tests"
+    protocol: "El script terminará con código de error para alertar al CI/CD o al usuario."

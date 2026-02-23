@@ -1,0 +1,47 @@
+# Changelog
+
+Todas las mejoras notables de este proyecto serán documentadas en este archivo.
+
+El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
+y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Añadido
+- **Visión Computarizada ("Ojo de Halcón")**: Implementado `execution/analyze_image.py` y su directiva correspondiente. Ahora el agente puede recibir fotos por Telegram, identificar piezas del motor y detectar daños visibles usando modelos multimodales (Gemini Vision).
+- **Análisis de Sonido de Motor**: Implementada la capacidad de analizar notas de voz de Telegram para diagnosticar ruidos de motor, como se describe en el documento de diseño. Creada la directiva `analyze_engine_sound.yaml` y actualizada la lógica en `listen_telegram.py`.
+- **Plan de Mantenimiento**: Creada la directiva `maintenance_schedule.yaml` y el comando `/mantenimiento [km]` para que el agente sugiera los servicios correspondientes al kilometraje del vehículo.
+- **Auto-Resolución de DTC**: El comando `/scan` ahora busca automáticamente en la memoria (RAG) la solución para los códigos de error encontrados.
+- **Ingesta de Documentos (RAG)**: Creado el script `execution/ingest_manual.py` y la directiva `ingest_document.yaml` para procesar manuales PDF y almacenarlos en la base de datos vectorial ChromaDB, habilitando la capacidad de responder preguntas basadas en documentación técnica específica del Fiat Siena 1.8.
+- Nuevo comando `/ingestar [archivo]` en Telegram para iniciar el proceso de ingesta de manuales desde la carpeta `docs/`.
+- Script `execution/check_system_health.py` para validación de entorno (Python, .env, dependencias).
+- Mejora en `generate_readme.py`: ahora lee los archivos YAML para incluir la descripción (`goal`) de cada directiva en el prompt del LLM.
+- Integración con Telegram: `execution/telegram_tool.py` y directiva `telegram_remote_control.yaml` para control remoto y notificaciones.
+- Nueva acción `get-id` en `telegram_tool.py` para facilitar la configuración inicial del Chat ID.
+- Nuevos comandos en `listen_telegram.py`: `/recordar` (memoria) y `/ayuda`.
+- Activación de RAG en `chat_with_llm.py`: ahora consulta automáticamente ChromaDB para inyectar contexto de memoria en las respuestas.
+- Depuración de RAG: `chat_with_llm.py` ahora muestra errores de memoria en stderr.
+- Gestión de memoria: añadido `delete_memory.py` y comando `/olvidar` en Telegram.
+- Mejora en `listen_telegram.py`: ahora muestra los logs de error (stderr) de los subprocesos para facilitar la depuración.
+- Robustez en `telegram_tool.py`: añadido fallback automático a texto plano si falla el envío por formato Markdown.
+- **Bug Fix Crítico**: Corregido error en `chat_with_llm.py` donde el contexto de memoria recuperado (RAG) no se enviaba al LLM.
+- Nuevo comando `/memory` en `run_agent.py` para consultar la memoria desde el CLI principal.
+- Mejora de RAG en `/investigar`: ahora el agente cruza los resultados de búsqueda con su memoria interna antes de resumir.
+- Mejora en logs de `chat_with_llm.py`: ahora muestra una previsualización del recuerdo recuperado para facilitar la depuración.
+- **Optimización RAG**: Implementado argumento `--memory-query` en `chat_with_llm.py` para separar la búsqueda en memoria del prompt al LLM, solucionando problemas de ruido en `/investigar`.
+- **Mejora de UX**: `listen_telegram.py` ahora reporta el error específico del LLM en lugar de un mensaje genérico.
+- Nueva capacidad: Comando `/resumir [url]` para análisis de webs (incluye `scrape_single_site.py`).
+- **Arquitectura "Memory-First"**: El chat general ahora consulta la memoria local antes de llamar a un LLM externo, permitiendo respuestas offline y más rápidas.
+- **Bug Fix**: Implementado argumento `--memory-only` en `chat_with_llm.py` que faltaba en la versión anterior.
+- **Bug Fix (API)**: Corregida la lista de modelos de fallback de Gemini en `chat_with_llm.py` para evitar errores 404 con modelos no soportados.
+- **Mejora RAG**: Deduplicación automática de recuerdos en `chat_with_llm.py` para evitar respuestas repetitivas.
+- **Mejora UX**: El comando `/memorias` en Telegram ahora muestra la hora exacta del recuerdo para facilitar la auditoría.
+- **Soporte Multi-Usuario**: `telegram_tool.py` y `listen_telegram.py` actualizados para responder a múltiples usuarios simultáneamente (Mente Colmena).
+
+## [1.0.0] - 2026-02-16
+### Añadido
+- Arquitectura de 3 capas (Directivas, Orquestación, Ejecución).
+- Integración con LLMs (OpenAI, Anthropic, Google Gemini).
+- Sistema de memoria vectorial local con ChromaDB.
+- Herramientas de desarrollo: `init_project`, `pre_commit_check`, `deploy_to_github`.
+- Soporte para interfaz de voz y traducción de documentos.
+- Documentación completa y guías de contribución.

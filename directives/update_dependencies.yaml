@@ -1,0 +1,13 @@
+goal: "Actualizar todas las librerías del proyecto a sus últimas versiones estables."
+required_inputs:
+  - name: "none"
+    description: "Utiliza requirements.txt como base."
+steps:
+  - step: "Upgrade Packages"
+    script_to_invoke: "execution/update_dependencies.py"
+    description: "Ejecutar pip install --upgrade para todas las dependencias listadas."
+expected_outputs:
+  - "Las librerías instaladas en el entorno actual se actualizan."
+edge_cases:
+  - case: "Conflictos de versiones"
+    protocol: "Pip reportará el error y el script se detendrá. Se requerirá resolución manual en requirements.txt."

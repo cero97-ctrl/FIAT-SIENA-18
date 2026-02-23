@@ -1,0 +1,20 @@
+goal: "Proporcionar el plan de mantenimiento recomendado para el Fiat Siena 1.8 según su kilometraje."
+required_inputs:
+  - name: "kilometraje"
+    description: "El kilometraje actual del vehículo en kilómetros (ej. 60000)."
+steps:
+  - step: "Generar Plan de Mantenimiento"
+    script_to_invoke: "execution/chat_with_llm.py"
+    description: "Consulta el manual y el conocimiento general para determinar las tareas de mantenimiento correspondientes al kilometraje."
+    inputs:
+      - name: "--prompt"
+        value: "Actúa como un asesor de servicio técnico de Fiat. Basado en el manual de taller del Fiat Siena 1.8 y el conocimiento general de su motor GM, ¿qué servicio de mantenimiento le corresponde a un vehículo con {{kilometraje}} km? Detalla los puntos a revisar o reemplazar (ej. aceite, filtros, correa de distribución, bujías, etc.)."
+      - name: "--memory-query"
+        value: "mantenimiento servicio {{kilometraje}} km"
+expected_outputs:
+  - "Un texto en formato Markdown con la lista de servicios de mantenimiento recomendados."
+edge_cases:
+  - case: "Kilometraje muy alto (ej. 300000 km)"
+    protocol: "El agente debe recomendar una inspección general completa además de los servicios cíclicos."
+  - case: "Kilometraje no numérico"
+    protocol: "El orquestador debe validar que la entrada sea un número antes de invocar el script."

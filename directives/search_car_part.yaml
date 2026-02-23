@@ -1,0 +1,17 @@
+goal: "Buscar disponibilidad y precios de un repuesto automotriz en tiendas en línea (MercadoLibre)."
+required_inputs:
+  - name: "part_name"
+    description: "Nombre específico de la pieza (ej. 'Bobina de encendido Fiat Siena 1.8')."
+  - name: "region"
+    description: "Código de país para la búsqueda (ve, ar, co, mx). Por defecto 've'."
+steps:
+  - step: "Buscar en E-commerce"
+    script_to_invoke: "execution/search_parts.py"
+    description: "Ejecuta una búsqueda filtrada en MercadoLibre y otros sitios de repuestos."
+    inputs:
+      - name: "--part"
+        value: "{{part_name}}"
+      - name: "--region"
+        value: "{{region}}"
+expected_outputs:
+  - "Un objeto JSON con una lista de productos encontrados, incluyendo título y enlace."

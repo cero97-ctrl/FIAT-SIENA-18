@@ -1,0 +1,16 @@
+goal: "Añadir automáticamente docstrings a un archivo de código Python que carece de documentación."
+required_inputs:
+  - name: "file_path"
+    description: "Ruta del archivo a documentar (ej. execution/script.py)."
+steps:
+  - step: "Auto Document"
+    script_to_invoke: "execution/auto_document.py"
+    description: "Analizar el archivo, detectar funciones sin docstrings y usar el LLM para generarlos e insertarlos."
+    inputs:
+      - name: "--file"
+        value: "{{file_path}}"
+expected_outputs:
+  - "El archivo original actualizado con docstrings en formato Google-style."
+edge_cases:
+  - case: "El archivo ya está documentado"
+    protocol: "El script detectará que no faltan docstrings y terminará sin realizar cambios para ahorrar tokens."

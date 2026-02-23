@@ -1,0 +1,10 @@
+goal: "Eliminar un recuerdo específico de la memoria a largo plazo."
+required_inputs:
+  - name: "memory_id"
+    description: "El ID único del recuerdo a eliminar."
+steps:
+  - step: 1
+    script_to_invoke: "execution/delete_memory.py"
+    inputs:
+      - name: "--id"
+        value: "{{memory_id}}"

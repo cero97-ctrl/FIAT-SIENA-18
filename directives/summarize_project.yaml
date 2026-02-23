@@ -1,0 +1,13 @@
+goal: "Generar un resumen ejecutivo del estado actual del proyecto, incluyendo actividad reciente y capacidades, ideal para reportes semanales."
+required_inputs:
+  - name: "none"
+    description: "No requiere entradas específicas."
+steps:
+  - step: "Analyze and Summarize"
+    script_to_invoke: "execution/summarize_project.py"
+    description: "Recopilar historial de git, estructura del proyecto y directivas para generar un reporte con el LLM."
+expected_outputs:
+  - "Un reporte en formato Markdown impreso en consola y guardado en WEEKLY_REPORT.md."
+edge_cases:
+  - case: "Sin historial git"
+    protocol: "El reporte indicará que no hay actividad registrada en el control de versiones."

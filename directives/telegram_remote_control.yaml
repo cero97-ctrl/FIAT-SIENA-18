@@ -1,0 +1,30 @@
+goal: "Monitorear la bandeja de entrada de Telegram y ejecutar comandos recibidos remotamente."
+required_inputs:
+  - name: "none"
+    description: "No requiere inputs iniciales, funciona por polling."
+steps:
+  - step: 1
+    name: "Check for new messages"
+    script_to_invoke: "execution/telegram_tool.py"
+    inputs:
+      - name: "--action"
+        value: "check"
+    outputs:
+      - name: "incoming_commands"
+        description: "Lista de mensajes de texto recibidos desde el último chequeo."
+  
+  - step: 2
+    name: "Process commands"
+    description: "Si hay mensajes en 'incoming_commands', interpreta la intención (ej. 'Resumir web X') y ejecuta la directiva correspondiente. Si la lista está vacía, termina el flujo."
+    
+  - step: 3
+    name: "Send confirmation"
+    script_to_invoke: "execution/telegram_tool.py"
+    inputs:
+      - name: "--action"
+        value: "send"
+      - name: "--message"
+        value: "✅ Comando recibido: '{{incoming_commands}}'. Iniciando ejecución..."
+edge_cases:
+  - case: "Error de conexión con Telegram"
+    recovery: "Esperar 30 segundos y reintentar. Si falla 3 veces, abortar."

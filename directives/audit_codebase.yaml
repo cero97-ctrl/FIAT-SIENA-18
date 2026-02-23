@@ -1,0 +1,14 @@
+goal: "Realizar un análisis estático del código fuente para identificar errores, problemas de estilo y deuda técnica."
+required_inputs:
+  - name: "none"
+    description: "El análisis se ejecuta sobre todo el directorio del proyecto automáticamente."
+steps:
+  - step: "Run Static Analysis"
+    script_to_invoke: "execution/audit_codebase.py"
+    description: "Escanear recursivamente archivos .py para detectar errores de sintaxis, falta de docstrings, líneas largas y TODOs."
+expected_outputs:
+  - "Un reporte detallado en formato JSON agrupado por archivo."
+  - "Resumen de la salud del código (Score)."
+edge_cases:
+  - case: "Archivos con codificación incorrecta"
+    protocol: "El script omitirá archivos que no sean UTF-8 y reportará el error de lectura."

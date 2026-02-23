@@ -1,0 +1,13 @@
+goal: "Formatear automáticamente el código fuente Python para cumplir con los estándares de estilo (PEP8/EditorConfig)."
+required_inputs:
+  - name: "none"
+    description: "El script se ejecuta sobre todo el proyecto."
+steps:
+  - step: "Run Formatter"
+    script_to_invoke: "execution/format_code.py"
+    description: "Ejecutar autopep8 recursivamente para corregir indentación y espaciado."
+expected_outputs:
+  - "Archivos .py modificados in-place con el formato correcto."
+edge_cases:
+  - case: "Librería faltante"
+    protocol: "El script fallará si autopep8 no está instalado. Se debe instalar vía pip."

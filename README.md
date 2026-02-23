@@ -1,0 +1,140 @@
+# SienaExpert-1.8: Agente de IA para Reparación Automotriz
+
+## Descripción
+**SienaExpert-1.8** es un Agente de Inteligencia Artificial diseñado para asistir en el diagnóstico, mantenimiento y reparación del automóvil **Fiat Siena 1.8** (especialmente versiones con motor GM Powertrain y sistema Magneti Marelli IAW 4SF).
+
+A diferencia de un manual estático, este agente actúa como un **asistente dinámico** capaz de:
+- **Diagnóstico Inteligente:** Interpretar códigos OBD-II y síntomas (ej. "tirones en ralentí") usando RAG sobre manuales técnicos.
+- **Visión Computarizada:** Identificar componentes y daños visibles mediante análisis de imágenes (ej. estado de correas).
+- **Base de Conocimiento (RAG):** Procesar manuales de taller en PDF para responder preguntas técnicas específicas (ej. "¿Cuál es el torque de la culata?").
+- **Gestión de Repuestos:** Sugerir números de parte y equivalencias (ej. compatibilidad con Chevrolet Meriva).
+
+Este proyecto implementa una arquitectura de 3 capas (Directivas, Orquestación, Ejecución) para transformar un simple chat en una herramienta de taller real.
+
+## Requisitos Previos
+
+- **Python 3.10+**
+- **Conda** (Recomendado para gestión de entornos)
+- **Clave de API** (Configurada en `.env`)
+
+### Hardware Recomendado (Prototipo Físico)
+Para la funcionalidad completa de "Taller Inteligente" descrita en la documentación:
+- **Cerebro:** Raspberry Pi 4 o superior (para ejecución local y conexión de periféricos).
+- **Conectividad:** Escáner OBD-II (ELM327 USB o Bluetooth).
+- **Visión:** Cámara Web HD o Endoscopio USB (para inspección de cilindros/válvulas).
+
+## Inicialización del Proyecto (Desde Plantilla)
+
+Para comenzar un nuevo desarrollo basado en este framework:
+
+1.  **Clonar la plantilla:**
+    ```bash
+    git clone <URL_DEL_REPOSITORIO> <NOMBRE_NUEVO_PROYECTO>
+    cd <NOMBRE_NUEVO_PROYECTO>
+    ```
+
+2.  **Ejecutar configuración automática:**
+    Este script configura el entorno (creándolo o reutilizando `agent_env` si ya existe), instala dependencias e inicializa el proyecto.
+    ```bash
+    bash setup.sh
+    ```
+
+3.  **Configurar credenciales:**
+    Edita el archivo `.env` generado y añade tus API Keys.
+
+4.  **Activar entorno:**
+    Para empezar a trabajar en futuras sesiones:
+    ```bash
+    conda activate agent_env
+    ```
+
+## Uso
+
+<!-- Instrucciones sobre cómo ejecutar el proyecto o interactuar con el agente -->
+Para iniciar el flujo principal:
+```bash
+# Ejemplo de comando
+python execution/run_agent.py
+```
+
+## Arquitectura del Agente
+Este proyecto utiliza una arquitectura de 3 capas (Directivas, Orquestación, Ejecución). Para detalles técnicos sobre cómo operar o extender el agente, consulta:
+
+- [Instrucciones del Agente](.gemini/instructions.md)
+- [Framework y Filosofía](.gemini/AGENT_FRAMEWORK.md)
+
+## Herramientas de Desarrollo
+Este framework incluye herramientas para facilitar tareas comunes:
+
+- **`init_project.py`**: Script para limpiar y configurar un nuevo proyecto desde esta plantilla.
+- **`create_new_directive.yaml`**: Directiva para generar automáticamente el esqueleto de nuevas directivas.
+- **`update_template.yaml`**: Directiva para traer actualizaciones desde el repositorio plantilla original.
+- **`deploy_to_github.yaml`**: Automatiza el flujo de git add/commit/push para reportar avances.
+
+## Control Remoto vía Telegram
+Este framework permite controlar al agente desde tu móvil usando Telegram.
+
+### Configuración
+1.  **Crear el Bot**:
+    - Abre Telegram y busca a **@BotFather**.
+    - Envía `/newbot` y sigue las instrucciones.
+    - Copia el **HTTP API Token** generado.
+
+2.  **Obtener tu Chat ID**:
+    - Añade el `TELEGRAM_BOT_TOKEN` al archivo `.env`.
+    - Envía un mensaje (ej. "Hola") a tu nuevo bot en Telegram.
+    - Ejecuta: `python execution/telegram_tool.py --action get-id`
+    - Copia el ID que aparece en pantalla.
+
+3.  **Actualizar .env**:
+    Añade las siguientes líneas a tu archivo `.env`:
+    ```env
+    TELEGRAM_BOT_TOKEN=tu_token_aqui
+    TELEGRAM_CHAT_ID=tu_id_numerico_aqui
+    ```
+
+    **Opcional: Multi-Usuario**
+    Por defecto, el bot solo te responde a ti. Para permitir que otros (ej. estudiantes) lo usen:
+    ```env
+    # Opción A: Permitir a TODO el mundo (Público)
+    TELEGRAM_ALLOWED_USERS=*
+    # Opción B: Lista blanca (IDs separados por comas)
+    # TELEGRAM_ALLOWED_USERS=12345678,87654321
+    ```
+
+### ¿Cómo encontrar el Bot?
+A veces el buscador de Telegram tarda en indexar bots nuevos por su nombre ("MiAgenteIA").
+Para asegurar que tus estudiantes lo encuentren:
+1.  Diles que busquen por el **usuario exacto** (ej. `@CERO97_BOT`).
+2.  O mejor aún, envíales el enlace directo: `https://t.me/CERO97_BOT`
+
+### Comandos Disponibles
+Una vez activado el modo escucha (`/telegram` en el CLI), puedes usar:
+- **Chat normal**: Habla con el agente para consultas generales.
+- **`/investigar [tema]`**: El agente buscará en internet y te dará un resumen (ej. `/investigar últimas noticias de IA`).
+- **`/resumir [url]`**: Lee una web y te dice de qué trata.
+- **`/recordar [texto]`**: Guarda una nota en la memoria a largo plazo del agente.
+- **`/memorias`**: Muestra una lista de los últimos recuerdos almacenados.
+- **`/olvidar [ID]`**: Elimina un recuerdo específico usando su ID.
+- **`/ayuda`**: Muestra la lista de comandos disponibles.
+
+## Reportar Avances (Git)
+Para guardar tu trabajo y subirlo a GitHub, puedes usar la herramienta de despliegue incluida:
+
+1.  **Primera subida (si reiniciaste el historial):**
+    ```bash
+    python execution/deploy_to_github.py --message "Entrega inicial" --remote <URL_TU_REPO>
+    ```
+
+2.  **Avances diarios:**
+    ```bash
+    python execution/deploy_to_github.py --message "Implementando función X"
+    ```
+
+## Mantenimiento y Contribución
+Si deseas proponer cambios o mejoras, consulta la [Guía de Contribución](CONTRIBUTING.md).
+
+Para mantener este proyecto actualizado con la plantilla original, puedes utilizar la directiva `directives/update_template.yaml`. Esta herramienta permite al agente traer los últimos cambios del repositorio base y fusionarlos con tu trabajo actual.
+
+## Licencia
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.

@@ -1,0 +1,15 @@
+autopep8
+beautifulsoup4
+chromadb
+duckduckgo-search
+google-generativeai
+psutil
+pytest
+PyAudio
+python-dotenv
+gTTS
+pydub
+pypdf
+SpeechRecognition
+PyYAML
+requests

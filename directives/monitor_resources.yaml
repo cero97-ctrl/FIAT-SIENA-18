@@ -1,0 +1,25 @@
+goal: "Verificar el estado de los recursos del sistema (CPU y Memoria) para prevenir sobrecargas."
+required_inputs:
+  - name: "none"
+    description: "Usa umbrales por defecto (85%)."
+optional_inputs:
+  - name: "cpu_threshold"
+    description: "Porcentaje límite de CPU."
+    default: "85.0"
+  - name: "mem_threshold"
+    description: "Porcentaje límite de Memoria."
+    default: "85.0"
+steps:
+  - step: "Check Resources"
+    script_to_invoke: "execution/monitor_resources.py"
+    description: "Medir uso actual de recursos y comparar con umbrales."
+    inputs:
+      - name: "--cpu-threshold"
+        value: "{{cpu_threshold}}"
+      - name: "--mem-threshold"
+        value: "{{mem_threshold}}"
+expected_outputs:
+  - "Métricas actuales en formato JSON y alertas si se superan los límites."
+edge_cases:
+  - case: "Librería psutil faltante"
+    protocol: "El script fallará indicando que se debe instalar psutil."

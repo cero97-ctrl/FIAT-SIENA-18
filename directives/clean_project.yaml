@@ -1,0 +1,13 @@
+goal: "Eliminar archivos temporales, cachés y reportes antiguos para dejar el proyecto limpio."
+required_inputs:
+  - name: "none"
+    description: "No requiere entradas."
+steps:
+  - step: "Deep Clean"
+    script_to_invoke: "execution/clean_project.py"
+    description: "Borrar contenido de .tmp/, carpetas __pycache__ recursivas y archivos de respaldo (.bak)."
+expected_outputs:
+  - "Espacio liberado y eliminación de artefactos generados."
+edge_cases:
+  - case: "Archivos en uso"
+    protocol: "El script intentará borrar lo que pueda y reportará errores en consola sin detenerse."
